@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cognitio+ Greetings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary-color: #4a90e2;
+      --secondary-color: #f1f6fb;
+      --accent-color: #ffd54f;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: var(--secondary-color);
+      color: #333;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 600px;
+      padding: 2rem;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      width: 90%;
+    }
+
+    h1 {
+      font-size: 2rem;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+    }
+
+    .tagline {
+      margin-top: 1.5rem;
+      font-size: 1rem;
+      color: #666;
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 id="greeting">Welcome</h1>
+    <p id="message">You are valued and your well-being matters. 💙</p>
+  </div>
+
+  <script>
+    const greetingEl = document.getElementById('greeting');
+    const messageEl = document.getElementById('message');
+
+    const greetings = {
+      morning: {
+        title: "Good Morning 🌞",
+        message: "Start your day with purpose and kindness. You are resilient and capable."
+      },
+      afternoon: {
+        title: "Good Afternoon 🌤️",
+        message: "Pause and breathe. Your presence is enough. Keep moving forward with grace."
+      },
+      evening: {
+        title: "Good Evening 🌇",
+        message: "Reflect on your day with compassion. Rest is a powerful form of resilience."
+      },
+      night: {
+        title: "Hello Night Owl 🌙",
+        message: "Take a moment for self-care. You’ve made it through today. You are not alone."
+      }
+    };
+
+    function updateGreeting() {
+      const hour = new Date().getHours();
+      let timeOfDay = 'morning';
+
+      if (hour >= 12 && hour < 17) {
+        timeOfDay = 'afternoon';
+      } else if (hour >= 17 && hour < 21) {
+        timeOfDay = 'evening';
+      } else if (hour >= 21 || hour < 5) {
+        timeOfDay = 'night';
+      }
+
+      greetingEl.innerText = greetings[timeOfDay].title;
+      messageEl.innerText = greetings[timeOfDay].message;
+    }
+
+    updateGreeting();
+  </script>
+</body>
+</html>
