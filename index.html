@@ -1,118 +1,416 @@
+Certainly! Here’s a complete, modern index.html file for the “Cognitio+ Greetings” project, incorporating:
+
+- Engaging, randomized, and personalized greetings  
+- Responsive design for all screens  
+- PWA support (manifest, service worker registration)  
+- Animated transitions  
+- Themed backgrounds by time of day  
+- Interactive “Another Message” button  
+- Special day recognition (weekends, holidays)  
+- Name storage via localStorage  
+- Accessibility best-practices
+
+**index.html**  
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cognitio+ Greetings</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#4a90e2">
+  <link rel="icon" href="icon-192.png" sizes="192x192" />
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary-color: #4a90e2;
       --secondary-color: #f1f6fb;
       --accent-color: #ffd54f;
+      --morning-bg: linear-gradient(135deg, #FFFBCC 0%, #fffbe6 100%);
+      --afternoon-bg: linear-gradient(135deg, #CFF0FF 0%, #e0f7fa 100%);
+      --evening-bg: linear-gradient(135deg, #FFDAB9 0%, #ffe4b2 100%);
+      --night-bg: linear-gradient(135deg, #232946 0%, #2e3a59 100%);
+      --weekend-bg: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+      --holiday-bg: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
     }
-
-    * {
-      box-sizing: border-box;
-    }
-
     html, body {
       margin: 0;
       padding: 0;
       font-family: 'Montserrat', sans-serif;
-      background: var(--secondary-color);
-      color: #333;
       height: 100%;
       width: 100%;
+      min-height: 100vh;
+      min-width: 100vw;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
+      background: var(--secondary-color);
+      transition: background 1s;
     }
-
     .container {
       max-width: 600px;
-      padding: 2rem;
+      width: 94vw;
+      padding: 2rem 1rem;
       background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-      width: 90%;
+      border-radius: 18px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.13);
+      margin: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeIn 1s;
     }
-
     h1 {
-      font-size: 2rem;
+      font-size: 2.3rem;
       color: var(--primary-color);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.7rem;
+      transition: color 0.5s;
     }
-
     p {
-      font-size: 1.2rem;
-      line-height: 1.6;
+      font-size: 1.25rem;
+      line-height: 1.65;
+      margin-bottom: 1.8rem;
+      color: #333;
     }
-
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
     .tagline {
-      margin-top: 1.5rem;
-      font-size: 1rem;
+      margin-top: 1.7rem;
+      font-size: 1.05rem;
       color: #666;
     }
-
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 1.5rem;
-      }
-
-      p {
-        font-size: 1rem;
-      }
+    .username-form {
+      margin-bottom: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .username-form input {
+      font-size: 1rem;
+      padding: 0.5em 1em;
+      border: 1px solid #b0bec5;
+      border-radius: 8px;
+      margin-right: 0.7em;
+      outline: none;
+      margin-bottom: 0.8em;
+    }
+    .username-form button {
+      background: var(--primary-color);
+      color: #fff;
+      border: none;
+      padding: 0.5em 1.3em;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .username-form button:hover {
+      background: #357ab7;
+    }
+    .btn-another {
+      background: var(--accent-color);
+      color: #333;
+      border: none;
+      border-radius: 8px;
+      padding: 0.5em 1.5em;
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-top: 0.8em;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      transition: background 0.2s;
+    }
+    .btn-another:hover, .btn-another:focus {
+      background: #ffe082;
+      outline: none;
+    }
+    @media (max-width: 700px) {
+      .container { max-width: 95vw; }
+      h1 { font-size: 1.5rem;}
+      p { font-size: 1.05rem;}
+    }
+    @media (max-width: 400px) {
+      .container { padding: 1rem 0.2rem; }
+      h1 { font-size: 1.15rem;}
+      p { font-size: 0.9rem;}
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1 id="greeting">Welcome</h1>
-    <p id="message">You are valued and your well-being matters. 💙</p>
+    <form class="username-form" id="usernameForm" style="display:none;">
+      <label for="usernameInput" style="margin-bottom:0.3em;">What's your name?</label>
+      <input type="text" id="usernameInput" name="username" placeholder="Enter your name" autocomplete="off" required />
+      <button type="submit">Save</button>
+    </form>
+    <h1 id="greeting" class="fade-in">Welcome</h1>
+    <p id="message" class="fade-in">You are valued and your well-being matters. 💙</p>
+    <button class="btn-another" id="anotherMessage" aria-label="Show another greeting">Another Message</button>
+    <div class="tagline">Cognitio+ Greetings 🌿 — A little encouragement for every moment.</div>
   </div>
-
   <script>
-    const greetingEl = document.getElementById('greeting');
-    const messageEl = document.getElementById('message');
-
+    // Time-based greetings
     const greetings = {
       morning: {
-        title: "Good Morning 🌞",
-        message: "Start your day with purpose and kindness. You are resilient and capable."
+        title: ["Good Morning 🌞", "Rise and Shine! 🌅", "Morning, Sunshine!"],
+        message: [
+          "Start your day with purpose and kindness.",
+          "You are resilient and capable.",
+          "May today bring you joy and clarity.",
+          "Your energy inspires the world around you."
+        ]
       },
       afternoon: {
-        title: "Good Afternoon 🌤️",
-        message: "Pause and breathe. Your presence is enough. Keep moving forward with grace."
+        title: ["Good Afternoon 🌤️", "Hello, Beautiful Afternoon!", "Keep Going!"],
+        message: [
+          "Pause and breathe. Your presence is enough.",
+          "Keep moving forward with grace.",
+          "Every effort counts — you’re doing great.",
+          "Let your spirit stay bright as the sun."
+        ]
       },
       evening: {
-        title: "Good Evening 🌇",
-        message: "Reflect on your day with compassion. Rest is a powerful form of resilience."
+        title: ["Good Evening 🌇", "Evening Reflections 🌠", "Unwind and Recharge"],
+        message: [
+          "Reflect on your day with compassion.",
+          "Rest is a powerful form of resilience.",
+          "You’ve earned this moment of peace.",
+          "Let gratitude fill your evening."
+        ]
       },
       night: {
-        title: "Hello Night Owl 🌙",
-        message: "Take a moment for self-care. You’ve made it through today. You are not alone."
+        title: ["Hello Night Owl 🌙", "Peaceful Night ✨", "Rest Well"],
+        message: [
+          "Take a moment for self-care. You’ve made it through today.",
+          "You are not alone.",
+          "Let tomorrow wait — tonight is for you.",
+          "Dream big, sleep deeply, and know you are enough."
+        ]
       }
     };
 
-    function updateGreeting() {
-      const hour = new Date().getHours();
-      let timeOfDay = 'morning';
+    // Extra compliments
+    const compliments = [
+      "You are awesome! 🚀",
+      "Keep shining!",
+      "Your smile is contagious 😊",
+      "Believe in yourself!",
+      "You make a difference every day.",
+      "Your kindness lights up the world.",
+      "You bring out the best in others.",
+      "You radiate positivity!",
+      "Your courage inspires me.",
+      "You are a force for good."
+    ];
 
-      if (hour >= 12 && hour < 17) {
-        timeOfDay = 'afternoon';
-      } else if (hour >= 17 && hour < 21) {
-        timeOfDay = 'evening';
-      } else if (hour >= 21 || hour < 5) {
-        timeOfDay = 'night';
-      }
+    // Recognized holidays (add more as desired)
+    const holidays = {
+      "01-01": "Happy New Year! 🎉 Wishing you a year of joy and growth.",
+      "12-25": "Merry Christmas! 🎄 May your heart be light and your days bright.",
+      "07-04": "Happy Independence Day! 🇺🇸 Celebrate freedom and unity.",
+      // Add more as "MM-DD": "Message"
+    };
 
-      greetingEl.innerText = greetings[timeOfDay].title;
-      messageEl.innerText = greetings[timeOfDay].message;
+    // Utility: get time of day
+    function getTimeOfDay(hour) {
+      if (hour >= 5 && hour < 12) return 'morning';
+      if (hour >= 12 && hour < 17) return 'afternoon';
+      if (hour >= 17 && hour < 21) return 'evening';
+      return 'night';
     }
 
-    updateGreeting();
+    // Utility: check for weekend
+    function isWeekend(date) {
+      return date.getDay() === 0 || date.getDay() === 6;
+    }
+
+    // Utility: get holiday message if today
+    function getHolidayMessage(date) {
+      const md = String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0');
+      return holidays[md] || null;
+    }
+
+    // Utility: get random item from array
+    function randomFrom(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    // Set background by time and special days
+    function setDynamicBackground(timeOfDay, date) {
+      const body = document.body;
+      const holidayMsg = getHolidayMessage(date);
+      if (holidayMsg) {
+        body.style.background = "var(--holiday-bg)";
+      } else if (isWeekend(date)) {
+        body.style.background = "var(--weekend-bg)";
+      } else if (timeOfDay === "morning") {
+        body.style.background = "var(--morning-bg)";
+      } else if (timeOfDay === "afternoon") {
+        body.style.background = "var(--afternoon-bg)";
+      } else if (timeOfDay === "evening") {
+        body.style.background = "var(--evening-bg)";
+      } else {
+        body.style.background = "var(--night-bg)";
+      }
+    }
+
+    // Personalized greeting logic
+    function getUserName() {
+      return localStorage.getItem("greetUserName") || "";
+    }
+    function setUserName(name) {
+      localStorage.setItem("greetUserName", name);
+    }
+    function askForName() {
+      document.getElementById("usernameForm").style.display = "flex";
+    }
+    function hideNameForm() {
+      document.getElementById("usernameForm").style.display = "none";
+    }
+
+    // Main greeting update
+    function updateGreeting(randomize=true) {
+      const now = new Date();
+      const hour = now.getHours();
+      const timeOfDay = getTimeOfDay(hour);
+
+      setDynamicBackground(timeOfDay, now);
+
+      const greetingEl = document.getElementById("greeting");
+      const messageEl = document.getElementById("message");
+
+      let userName = getUserName();
+      let holidayMsg = getHolidayMessage(now);
+
+      // Animate out
+      greetingEl.classList.remove('fade-in');
+      messageEl.classList.remove('fade-in');
+
+      setTimeout(() => {
+        // Prefer holiday
+        if (holidayMsg) {
+          greetingEl.innerText = (userName ? `Hi ${userName}, ` : "") + "Special Greetings!";
+          messageEl.innerText = holidayMsg + " " + randomFrom(compliments);
+        } 
+        // Weekend
+        else if (isWeekend(now)) {
+          greetingEl.innerText = (userName ? `Happy Weekend, ${userName}! 🎉` : "Happy Weekend! 🎉");
+          messageEl.innerText = "Take time for yourself. You deserve joy and relaxation. " + randomFrom(compliments);
+        } 
+        // Weekday/Time-based
+        else {
+          const gTitle = randomize ? randomFrom(greetings[timeOfDay].title) : greetings[timeOfDay].title[0];
+          const gMsg = randomize ? randomFrom(greetings[timeOfDay].message) : greetings[timeOfDay].message[0];
+          greetingEl.innerText = (userName ? `${gTitle}, ${userName}!` : gTitle);
+          messageEl.innerText = gMsg + " " + randomFrom(compliments);
+        }
+        // Animate in
+        greetingEl.classList.add('fade-in');
+        messageEl.classList.add('fade-in');
+      }, 100); // Short delay for reflow
+    }
+
+    // Name form logic
+    document.getElementById("usernameForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const name = document.getElementById("usernameInput").value.trim();
+      if (name) {
+        setUserName(name);
+        hideNameForm();
+        updateGreeting();
+      }
+    });
+
+    // Show name prompt if needed
+    window.addEventListener("DOMContentLoaded", () => {
+      if (!getUserName()) {
+        askForName();
+      } else {
+        updateGreeting();
+      }
+    });
+
+    // Interactive: another message button
+    document.getElementById("anotherMessage").onclick = () => updateGreeting(true);
+
+    // Accessibility: focus management
+    document.getElementById("anotherMessage").addEventListener("keyup", function(e){
+      if(e.key === "Enter" || e.key === " "){
+        updateGreeting(true);
+      }
+    });
+
+    // PWA: Service Worker registration
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('service-worker.js').catch(function(error) {
+          // Service worker failed (optional: log to analytics)
+        });
+      });
+    }
   </script>
 </body>
 </html>
+```
+
+---
+
+**Required PWA files** (add these to your project root):
+
+**manifest.json**
+```json
+{
+  "name": "Cognitio+ Greetings",
+  "short_name": "Greetings",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#f1f6fb",
+  "theme_color": "#4a90e2",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
+```
+
+**service-worker.js**
+```js
+const CACHE_NAME = 'greetings-cache-v1';
+const urlsToCache = [
+  '/',
+  '/index.html',
+  '/manifest.json',
+  '/icon-192.png',
+  '/icon-512.png'
+  // Add any other assets as needed
+];
+
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(urlsToCache))
+  );
+});
+
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => response || fetch(event.request))
+  );
+});
