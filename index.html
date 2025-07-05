@@ -1,16 +1,23 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- In <head> -->
-<link rel="stylesheet" href="style.css">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cognitio+ Greetings</title>
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Cognitio+ Greetings - Personalized encouragement for every moment. Uplift your day with dynamic, accessible, and beautiful greetings." />
+  <meta name="keywords" content="greetings, encouragement, Cognitio+, HTML, CSS, JavaScript, wellness, motivation" />
+  <meta name="author" content="asilva777" />
+  <!-- PWA and Theme -->
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#4a90e2">
   <link rel="icon" href="icon-192.png" sizes="192x192" />
   <link rel="apple-touch-icon" href="icon-192.png">
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Internal CSS for Dynamic/Override Styles -->
   <style>
     :root {
       --primary-color: #4a90e2;
@@ -22,21 +29,23 @@
       --night-bg: linear-gradient(135deg, #232946 0%, #2e3a59 100%);
       --weekend-bg: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
       --holiday-bg: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+      --error-color: #d32f2f;
+      --success-color: #388e3c;
     }
     html, body {
       margin: 0;
       padding: 0;
-      font-family: 'Montserrat', sans-serif;
-      height: 100%;
-      width: 100%;
+      font-family: 'Montserrat', Arial, Helvetica, sans-serif;
       min-height: 100vh;
       min-width: 100vw;
+      height: 100%;
+      width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
       background: var(--secondary-color);
       transition: background 1s;
+      color-scheme: light dark;
     }
     .container {
       max-width: 600px;
@@ -50,6 +59,7 @@
       flex-direction: column;
       align-items: center;
       animation: fadeIn 1s;
+      outline: none;
     }
     h1 {
       font-size: 2.3rem;
@@ -80,15 +90,25 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      width: 100%;
+    }
+    .username-form label {
+      margin-bottom: 0.3em;
+      font-weight: 600;
     }
     .username-form input {
       font-size: 1rem;
       padding: 0.5em 1em;
       border: 1px solid #b0bec5;
       border-radius: 8px;
-      margin-right: 0.7em;
-      outline: none;
       margin-bottom: 0.8em;
+      outline: none;
+      width: 90%;
+      max-width: 300px;
+    }
+    .username-form input:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 2px var(--primary-color);
     }
     .username-form button {
       background: var(--primary-color);
@@ -100,8 +120,10 @@
       cursor: pointer;
       transition: background 0.3s;
     }
-    .username-form button:hover {
+    .username-form button:hover,
+    .username-form button:focus {
       background: #357ab7;
+      outline: none;
     }
     .btn-another {
       background: var(--accent-color);
@@ -114,14 +136,27 @@
       margin-top: 0.8em;
       cursor: pointer;
       box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-      transition: background 0.2s;
+      transition: background 0.2s, color 0.2s;
     }
     .btn-another:hover, .btn-another:focus {
       background: #ffe082;
+      color: #1a1a1a;
       outline: none;
     }
+    .message-status {
+      margin-top: 0.5em;
+      font-size: 1rem;
+      font-weight: 500;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .message-status.visible {
+      opacity: 1;
+    }
+    .message-status.error { color: var(--error-color); }
+    .message-status.success { color: var(--success-color); }
     @media (max-width: 700px) {
-      .container { max-width: 95vw; }
+      .container { max-width: 98vw; }
       h1 { font-size: 1.5rem;}
       p { font-size: 1.05rem;}
     }
@@ -133,19 +168,26 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <form class="username-form" id="usernameForm" style="display:none;">
-      <label for="usernameInput" style="margin-bottom:0.3em;">What's your name?</label>
-      <input type="text" id="usernameInput" name="username" placeholder="Enter your name" autocomplete="off" required />
-      <button type="submit">Save</button>
+  <main class="container" tabindex="-1" aria-labelledby="greeting">
+    <form class="username-form" id="usernameForm" aria-label="Name input form" autocomplete="off" style="display:none;">
+      <label for="usernameInput">What's your name?</label>
+      <input type="text" id="usernameInput" name="username" placeholder="Enter your name" required aria-required="true" aria-label="Enter your name" maxlength="32" pattern="^[a-zA-Z0-9\s.'\-]{1,32}$" />
+      <button type="submit" aria-label="Save name">Save</button>
+      <div class="message-status" id="formStatus" role="alert" aria-live="polite"></div>
     </form>
-    <h1 id="greeting" class="fade-in">Welcome</h1>
-    <p id="message" class="fade-in">You are valued and your well-being matters. 💙</p>
-    <button class="btn-another" id="anotherMessage" aria-label="Show another greeting">Another Message</button>
+    <h1 id="greeting" class="fade-in" tabindex="0">Welcome</h1>
+    <p id="message" class="fade-in" tabindex="0">You are valued and your well-being matters. 💙</p>
+    <button class="btn-another" id="anotherMessage" aria-label="Show another greeting" tabindex="0">Another Message</button>
     <div class="tagline">Cognitio+ Greetings 🌿 — A little encouragement for every moment.</div>
-  </div>
+  </main>
   <script>
-    // Time-based greetings
+    // --- Accessibility: Move focus as needed ---
+    function moveFocusToId(id) {
+      const el = document.getElementById(id);
+      if (el) el.focus();
+    }
+
+    // --- Greetings and Compliments ---
     const greetings = {
       morning: {
         title: ["Good Morning 🌞", "Rise and Shine! 🌅", "Morning, Sunshine!"],
@@ -185,7 +227,6 @@
       }
     };
 
-    // Extra compliments
     const compliments = [
       "You are awesome! 🚀",
       "Keep shining!",
@@ -199,39 +240,57 @@
       "You are a force for good."
     ];
 
-    // Recognized holidays (add more as desired)
+    // Add more holidays as desired
     const holidays = {
       "01-01": "Happy New Year! 🎉 Wishing you a year of joy and growth.",
       "12-25": "Merry Christmas! 🎄 May your heart be light and your days bright.",
-      "07-04": "Happy Independence Day! 🇺🇸 Celebrate freedom and unity.",
-      // Add more as "MM-DD": "Message"
+      "07-04": "Happy Independence Day! 🇺🇸 Celebrate freedom and unity."
+      // Extend as needed
     };
 
-    // Utility: get time of day
+    // --- Utilities ---
     function getTimeOfDay(hour) {
       if (hour >= 5 && hour < 12) return 'morning';
       if (hour >= 12 && hour < 17) return 'afternoon';
       if (hour >= 17 && hour < 21) return 'evening';
       return 'night';
     }
-
-    // Utility: check for weekend
     function isWeekend(date) {
       return date.getDay() === 0 || date.getDay() === 6;
     }
-
-    // Utility: get holiday message if today
     function getHolidayMessage(date) {
       const md = String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0');
       return holidays[md] || null;
     }
-
-    // Utility: get random item from array
     function randomFrom(arr) {
       return arr[Math.floor(Math.random() * arr.length)];
     }
+    function sanitizeName(name) {
+      // Only allow letters, numbers, spaces, and a few common punctuation (apostrophe, period, hyphen)
+      return name.replace(/[^a-zA-Z0-9\s.'\-]/g, '').trim().slice(0, 32);
+    }
 
-    // Set background by time and special days
+    // --- LocalStorage for Username ---
+    function getUserName() {
+      return localStorage.getItem("greetUserName") || "";
+    }
+    function setUserName(name) {
+      localStorage.setItem("greetUserName", name);
+    }
+    function clearUserName() {
+      localStorage.removeItem("greetUserName");
+    }
+
+    // --- UI Handlers ---
+    function askForName() {
+      document.getElementById("usernameForm").style.display = "flex";
+      moveFocusToId("usernameInput");
+    }
+    function hideNameForm() {
+      document.getElementById("usernameForm").style.display = "none";
+    }
+
+    // --- Dynamic Background ---
     function setDynamicBackground(timeOfDay, date) {
       const body = document.body;
       const holidayMsg = getHolidayMessage(date);
@@ -250,22 +309,8 @@
       }
     }
 
-    // Personalized greeting logic
-    function getUserName() {
-      return localStorage.getItem("greetUserName") || "";
-    }
-    function setUserName(name) {
-      localStorage.setItem("greetUserName", name);
-    }
-    function askForName() {
-      document.getElementById("usernameForm").style.display = "flex";
-    }
-    function hideNameForm() {
-      document.getElementById("usernameForm").style.display = "none";
-    }
-
-    // Main greeting update
-    function updateGreeting(randomize=true) {
+    // --- Main Greeting Update ---
+    function updateGreeting(randomize = true) {
       const now = new Date();
       const hour = now.getHours();
       const timeOfDay = getTimeOfDay(hour);
@@ -274,7 +319,6 @@
 
       const greetingEl = document.getElementById("greeting");
       const messageEl = document.getElementById("message");
-
       let userName = getUserName();
       let holidayMsg = getHolidayMessage(now);
 
@@ -287,12 +331,12 @@
         if (holidayMsg) {
           greetingEl.innerText = (userName ? `Hi ${userName}, ` : "") + "Special Greetings!";
           messageEl.innerText = holidayMsg + " " + randomFrom(compliments);
-        } 
+        }
         // Weekend
         else if (isWeekend(now)) {
           greetingEl.innerText = (userName ? `Happy Weekend, ${userName}! 🎉` : "Happy Weekend! 🎉");
           messageEl.innerText = "Take time for yourself. You deserve joy and relaxation. " + randomFrom(compliments);
-        } 
+        }
         // Weekday/Time-based
         else {
           const gTitle = randomize ? randomFrom(greetings[timeOfDay].title) : greetings[timeOfDay].title[0];
@@ -303,48 +347,82 @@
         // Animate in
         greetingEl.classList.add('fade-in');
         messageEl.classList.add('fade-in');
+        greetingEl.setAttribute('tabindex', '0');
+        messageEl.setAttribute('tabindex', '0');
       }, 100); // Short delay for reflow
     }
 
-    // Name form logic
+    // --- Form Logic & Validation ---
     document.getElementById("usernameForm").addEventListener("submit", function(e) {
       e.preventDefault();
-      const name = document.getElementById("usernameInput").value.trim();
-      if (name) {
-        setUserName(name);
+      const input = document.getElementById("usernameInput");
+      const statusEl = document.getElementById("formStatus");
+      let name = sanitizeName(input.value);
+
+      if (!name) {
+        statusEl.textContent = "Please enter a valid name (letters, numbers, spaces, and .'-).";
+        statusEl.className = "message-status visible error";
+        moveFocusToId("usernameInput");
+        return;
+      }
+
+      setUserName(name);
+      statusEl.textContent = "Name saved!";
+      statusEl.className = "message-status visible success";
+      setTimeout(() => {
+        statusEl.textContent = "";
+        statusEl.className = "message-status";
         hideNameForm();
         updateGreeting();
-      }
+        moveFocusToId("greeting");
+      }, 700);
     });
 
-    // Show name prompt if needed
+    // --- Show name prompt if needed ---
     window.addEventListener("DOMContentLoaded", () => {
       if (!getUserName()) {
         askForName();
       } else {
         updateGreeting();
+        moveFocusToId("greeting");
       }
     });
 
-    // Interactive: another message button
-    document.getElementById("anotherMessage").onclick = () => updateGreeting(true);
+    // --- Interactive: another message button ---
+    document.getElementById("anotherMessage").addEventListener("click", () => {
+      updateGreeting(true);
+      moveFocusToId("greeting");
+    });
 
-    // Accessibility: focus management
-    document.getElementById("anotherMessage").addEventListener("keyup", function(e){
-      if(e.key === "Enter" || e.key === " "){
+    // --- Accessibility: keyboard activation for button ---
+    document.getElementById("anotherMessage").addEventListener("keyup", function(e) {
+      if (e.key === "Enter" || e.key === " ") {
         updateGreeting(true);
+        moveFocusToId("greeting");
       }
     });
 
-    // PWA: Service Worker registration
+    // --- Clear username on Escape for demo/UX (optional) ---
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape" && getUserName()) {
+        clearUserName();
+        askForName();
+        updateGreeting();
+        moveFocusToId("usernameInput");
+      }
+    });
+
+    // --- Service Worker registration for PWA ---
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function() {
-        navigator.serviceWorker.register('service-worker.js').catch(function(error) {
-          // Service worker failed (optional: log to analytics)
-        });
+        navigator.serviceWorker.register('service-worker.js')
+          .catch(function(error) {
+            console.error('Service Worker registration failed:', error);
+          });
       });
     }
   </script>
-<script src="script.js"></script>
+  <!-- Defer external script if needed -->
+  <!-- <script src="script.js" defer></script> -->
 </body>
 </html>
