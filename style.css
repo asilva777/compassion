@@ -37,6 +37,7 @@ body {
   justify-content: center;
   min-height: 100vh;
   flex-direction: column;
+  transition: background-image 1s ease-in-out;
 }
 
 /* --- Card Container for Greetings --- */
