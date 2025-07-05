@@ -11,7 +11,7 @@
   --greeting-font: 'Segoe UI', 'Poppins', Arial, sans-serif;
   --main-text: #222;
   --subtle-text: #666;
-  --accent: #27ae60;
+  --accent: #000; /* Changed from #27ae60 (green) to black */
   --card-bg: rgba(255,255,255,0.92);
   --border-radius: 1.2em;
   --shadow: 0 4px 32px rgba(0,0,0,0.16);
@@ -54,7 +54,7 @@ body {
   font-size: 2.1em;
   font-weight: 700;
   margin: 0.3em 0 0.2em 0;
-  color: var(--accent);
+  color: var(--accent); /* Now black */
   letter-spacing: 1px;
 }
 
@@ -112,13 +112,13 @@ body {
 }
 
 #usernameForm input[type="text"]:focus {
-  border-color: var(--accent);
+  border-color: var(--accent); /* Now black */
   outline: none;
 }
 
 #usernameForm button {
-  background: var(--accent);
-  color: #fff;
+  background: var(--accent); /* Now black */
+  color: #fff; /* Button text white */
   border: none;
   border-radius: 0.9em;
   padding: 0.7em 2em;
@@ -138,8 +138,8 @@ body {
   padding: 0.65em 2em;
   border: none;
   border-radius: 1em;
-  background: var(--accent);
-  color: #fff;
+  background: var(--accent); /* Now black */
+  color: #fff; /* Button text white */
   font-weight: 600;
   font-size: 1.07em;
   letter-spacing: 0.7px;
