@@ -345,62 +345,6 @@
       });
     }
   </script>
-  <!-- Before </body> -->
 <script src="script.js"></script>
 </body>
 </html>
-```
-
----
-
-**Required PWA files** (add these to your project root):
-
-**manifest.json**
-```json
-{
-  "name": "Cognitio+ Greetings",
-  "short_name": "Greetings",
-  "start_url": ".",
-  "display": "standalone",
-  "background_color": "#f1f6fb",
-  "theme_color": "#4a90e2",
-  "icons": [
-    {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ]
-}
-```
-
-**service-worker.js**
-```js
-const CACHE_NAME = 'greetings-cache-v1';
-const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/icon-192.png',
-  '/icon-512.png'
-  // Add any other assets as needed
-];
-
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(urlsToCache))
-  );
-});
-
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => response || fetch(event.request))
-  );
-});
