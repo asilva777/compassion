@@ -129,7 +129,7 @@ body {
   transition: background 0.3s;
 }
 #usernameForm button:hover, #usernameForm button:focus {
-  background: #219150;
+  background: #222;
 }
 
 /* --- Another Message Button --- */
@@ -144,14 +144,14 @@ body {
   font-size: 1.07em;
   letter-spacing: 0.7px;
   cursor: pointer;
-  box-shadow: 0 2px 12px rgba(39,174,96,0.12);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
   transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
   outline: none;
 }
 #anotherMessage:hover, #anotherMessage:focus,
 .another-message-btn:hover, .another-message-btn:focus {
-  background: #229954;
-  box-shadow: 0 4px 20px rgba(39,174,96,0.18);
+  background: #222;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.18);
   transform: scale(1.04);
 }
 
@@ -172,6 +172,6 @@ body {
 
 /* --- Accessibility: Focus Ring for All Buttons --- */
 button:focus-visible {
-  outline: 2px solid #0c8c4c;
+  outline: 2px solid #000;
   outline-offset: 3px;
 }
