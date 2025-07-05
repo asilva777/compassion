@@ -152,8 +152,35 @@ function setRollingBackground() {
   document.body.style.backgroundPosition = "center";
   bgIndex = (bgIndex + 1) % rollingBackgrounds.length;
 }
+function setGreetingBackground() {
+  const hour = new Date().getHours();
+  let bgVar;
 
+  if (hour >= 5 && hour < 12) {
+    // Morning
+    bgVar = 'var(--morning-bg-img)';
+  } else if (hour >= 12 && hour < 17) {
+    // Afternoon
+    bgVar = 'var(--afternoon-bg-img)';
+  } else if (hour >= 17 && hour < 20) {
+    // Evening
+    bgVar = 'var(--evening-bg-img)';
+  } else {
+    // Night
+    bgVar = 'var(--night-bg-img)';
+  }
+
+  document.body.style.backgroundImage = bgVar;
+}
+
+setGreetingBackground();
 // --- DOM Ready Logic ---
+document.addEventListener('DOMContentLoaded', function() {
+  // other code...
+
+  // Place this call here:
+  setGreetingBackground();
+});
 document.addEventListener("DOMContentLoaded", () => {
   const usernameForm = document.getElementById("usernameForm");
   if (usernameForm) {
