@@ -185,7 +185,29 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+// Array of background image URLs
+const images = [
+  'url("images/bg1.jpg")',
+  'url("images/bg2.jpg")',
+  'url("images/bg3.jpg")'
+];
 
+// Index to track the current image
+let current = 0;
+
+// Function to change the background image
+function changeBackground() {
+  document.body.style.backgroundImage = images[current];
+  document.body.style.backgroundSize = "cover";
+  document.body.style.backgroundPosition = "center";
+  current = (current + 1) % images.length;
+}
+
+// Initial call
+changeBackground();
+
+// Change image every 5 seconds (5000ms)
+setInterval(changeBackground, 5000);
   // PWA: Service Worker registration
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function () {
