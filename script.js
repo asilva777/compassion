@@ -1,4 +1,4 @@
-// --- Dynamic Greetings, Personalization, PWA, and Animations ---
+// --- Dynamic Greetings, Personalization, PWA, and Rolling Backgrounds ---
 
 const greetings = {
   morning: {
@@ -52,7 +52,6 @@ const compliments = [
   "You are a force for good."
 ];
 
-// Add more as needed
 const holidays = {
   "01-01": "Happy New Year! 🎉 Wishing you a year of joy and growth.",
   "12-25": "Merry Christmas! 🎄 May your heart be light and your days bright.",
@@ -80,21 +79,7 @@ function randomFrom(arr) {
 }
 
 function setDynamicBackground(timeOfDay, date) {
-  const body = document.body;
-  const holidayMsg = getHolidayMessage(date);
-  if (holidayMsg) {
-    body.style.background = "var(--holiday-bg)";
-  } else if (isWeekend(date)) {
-    body.style.background = "var(--weekend-bg)";
-  } else if (timeOfDay === "morning") {
-    body.style.background = "var(--morning-bg)";
-  } else if (timeOfDay === "afternoon") {
-    body.style.background = "var(--afternoon-bg)";
-  } else if (timeOfDay === "evening") {
-    body.style.background = "var(--evening-bg)";
-  } else {
-    body.style.background = "var(--night-bg)";
-  }
+  // No-op: replaced by rolling background
 }
 
 function getUserName() {
@@ -118,7 +103,7 @@ function updateGreeting(randomize = true) {
   const hour = now.getHours();
   const timeOfDay = getTimeOfDay(hour);
 
-  setDynamicBackground(timeOfDay, now);
+  // setDynamicBackground(timeOfDay, now); // Not needed with rolling backgrounds
 
   const greetingEl = document.getElementById("greeting");
   const messageEl = document.getElementById("message");
@@ -153,7 +138,22 @@ function updateGreeting(randomize = true) {
   }, 100);
 }
 
-// Name form logic
+// --- Rolling Background Images Logic ---
+const rollingBackgrounds = [
+  "var(--morning-bg-img)",
+  "var(--afternoon-bg-img)",
+  "var(--evening-bg-img)",
+  "var(--night-bg-img)"
+];
+let bgIndex = 0;
+function setRollingBackground() {
+  document.body.style.backgroundImage = getComputedStyle(document.documentElement).getPropertyValue(rollingBackgrounds[bgIndex]);
+  document.body.style.backgroundSize = "cover";
+  document.body.style.backgroundPosition = "center";
+  bgIndex = (bgIndex + 1) % rollingBackgrounds.length;
+}
+
+// --- DOM Ready Logic ---
 document.addEventListener("DOMContentLoaded", () => {
   const usernameForm = document.getElementById("usernameForm");
   if (usernameForm) {
@@ -185,29 +185,11 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
-// Array of background image URLs
-const images = [
-  'url("images/bg1.jpg")',
-  'url("images/bg2.jpg")',
-  'url("images/bg3.jpg")'
-];
 
-// Index to track the current image
-let current = 0;
+  // Start rolling background
+  setRollingBackground();
+  setInterval(setRollingBackground, 5000);
 
-// Function to change the background image
-function changeBackground() {
-  document.body.style.backgroundImage = images[current];
-  document.body.style.backgroundSize = "cover";
-  document.body.style.backgroundPosition = "center";
-  current = (current + 1) % images.length;
-}
-
-// Initial call
-changeBackground();
-
-// Change image every 5 seconds (5000ms)
-setInterval(changeBackground, 5000);
   // PWA: Service Worker registration
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function () {
@@ -216,55 +198,4 @@ setInterval(changeBackground, 5000);
       });
     });
   }
-});
-**Required PWA files** (add these to your project root):
-
-**manifest.json**
-```json
-{
-  "name": "Cognitio+ Greetings",
-  "short_name": "Greetings",
-  "start_url": ".",
-  "display": "standalone",
-  "background_color": "#f1f6fb",
-  "theme_color": "#4a90e2",
-  "icons": [
-    {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ]
-}
-```
-
-**service-worker.js**
-```js
-const CACHE_NAME = 'greetings-cache-v1';
-const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/icon-192.png',
-  '/icon-512.png'
-  // Add any other assets as needed
-];
-
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(urlsToCache))
-  );
-});
-
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => response || fetch(event.request))
-  );
 });
