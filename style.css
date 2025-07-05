@@ -1,13 +1,15 @@
 /* --- CSS Variables for Dynamic Backgrounds and Theming --- */
 :root {
-  /* Backgrounds for each time of day, weekend, and holiday */
-  --morning-bg: linear-gradient(135deg, #f9d423 0%, #ff4e50 100%);
-  --afternoon-bg: linear-gradient(135deg, #56ccf2 0%, #2f80ed 100%);
-  --evening-bg: linear-gradient(135deg, #614385 0%, #516395 100%);
-  --night-bg: linear-gradient(135deg, #232526 0%, #414345 100%);
-  --weekend-bg: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-  --holiday-bg: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
-
+  --morning-bg-img: url('https://img.freepik.com/premium-photo/gradient-landscape-wallpaper_974629-18708.jpg');
+  --afternoon-bg-img: url('https://pics.craiyon.com/2023-10-08/001533fe4adc40d7b161b5ffe29bf707.webp');
+  --evening-bg-img: url('https://img.freepik.com/premium-vector/full-moon-with-clouds-stars-night-sky_16058-19.jpg');
+  --night-bg-img: url('https://tse1.mm.bing.net/th/id/OIP.VB28ktCNFOtPQHelGzrPSQHaHa?w=1800&h=1800&rs=1&pid=ImgDetMain&o=7&rm=3');
+}
+.morning-bg { background-image: var(--morning-bg-img); }
+.afternoon-bg { background-image: var(--afternoon-bg-img); }
+.evening-bg { background-image: var(--evening-bg-img); }
+.night-bg { background-image: var(--night-bg-img); }
+  
   --greeting-font: 'Segoe UI', 'Poppins', Arial, sans-serif;
   --main-text: #222;
   --subtle-text: #666;
