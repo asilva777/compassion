@@ -13,23 +13,64 @@
 </head>
 <body>
   <header>
-    <h1></h1>
-    <nav>
-      <button id="themeToggle" aria-pressed="false" aria-label="Toggle dark/light mode">🌙</button>
-    </nav>
   </header>
   <main>
     <section id="greetSection">
+      <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: "Montserrat", sans-serif;
+      background: #ffffff;
+      color: #000;
+      text-align: center;
+      padding: 2rem;
+    }
+    h1 {
+      font-family: "Oswald", sans-serif;
+      font-size: 2.5rem;
+    }
+    p {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+    }
+    form {
+      margin-top: 2rem;
+    }
+    input, button {
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+    button {
+      background-color: #f3e329;
+      color: #000;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 id="greeting">Loading...</h1>
+  <p id="message"></p>
+
+  <form id="usernameForm" style="display: none;">
+    <label for="usernameInput">What's your name?</label><br>
+    <input type="text" id="usernameInput" required>
+    <button type="submit">Submit</button>
+  </form>
+
+  <div style="margin-top: 1rem;">
+    <button id="anotherMessage">Show Another Message</button>
+  </div>
       <div id="greeting" class="fade-in"></div>
       <div id="message" class="fade-in"></div>
       <button id="anotherMessage" class="gold-btn" aria-label="Show another greeting">Another Greeting</button>
     </section>
-    <form id="usernameForm" style="display:none;" autocomplete="off">
-      <label for="usernameInput">What's your name?</label>
-      <input type="text" id="usernameInput" name="usernameInput" required maxlength="10" autocomplete="on">
-      <button type="submit" class="gold-btn">Save</button>
     </form>
-  </main>
     <span></span>
   <div id="toast" role="status" aria-live="polite"></div>
     <section>
@@ -61,10 +102,7 @@
         <section>
             <div id="status" role="alert" aria-live="polite" aria-atomic="true"></div>
         </section>
-    </main>
-    <footer>
-    </footer>
-    <script> link="script.js" </script>
+    <script src="script.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/service-worker.js')
@@ -109,5 +147,5 @@
             document.getElementById('previewText').innerText = 'Your message preview will appear here.';
         }
     </script>
-</body>
+  </body>
 </html> 
