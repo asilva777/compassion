@@ -2,7 +2,7 @@
   "name": "Cognitio+ Compassion Greetings",
   "short_name": "Compassion",
   "description": "Personalized daily greetings and compliments to inspire compassion and positivity.",
-  "start_url": ".",
+  "start_url": "https://app.cognitio-plus.com",
   "display": "standalone",
   "background_color": "#FFD700",
   "theme_color": "#FFD700",
