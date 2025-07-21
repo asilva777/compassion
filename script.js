@@ -1,61 +1,38 @@
-// --- Dynamic Greetings, Personalization, PWA, and Rolling Backgrounds ---
-document.addEventListener('DOMContentLoaded', function () {
-  const themeToggle = document.getElementById('themeToggle');
-  function setTheme(mode) {
-    document.body.classList.remove('light-mode', 'dark-mode');
-    document.body.classList.add(mode);
-    localStorage.setItem('theme', mode);
-    themeToggle.innerText = mode === 'dark-mode' ? '🌙' : '☀️';
-    themeToggle.setAttribute('aria-pressed', mode === 'dark-mode' ? 'true' : 'false');
-  }
-  // Initialize theme
-  const savedTheme = localStorage.getItem('theme') || 'dark-mode';
-  setTheme(savedTheme);
-
-  themeToggle.addEventListener('click', function () {
-    const isDark = document.body.classList.contains('dark-mode');
-    setTheme(isDark ? 'light-mode' : 'dark-mode');
-  });
-});
-const greetings = {
-  morning: {
-    title: ["Good Morning 🌞", "Rise and Shine! 🌅", "Morning, Sunshine!"],
-    message: [
-      "Start your day with purpose and kindness.",
-      "You are resilient and capable.",
-      "May today bring you joy and clarity.",
-      "Your energy inspires the world around you."
-    ]
-  },
-  afternoon: {
-    title: ["Good Afternoon 🌤️", "Hello, Beautiful Afternoon!", "Keep Going!"],
-    message: [
-      "Pause and breathe. Your presence is enough.",
-      "Keep moving forward with grace.",
-      "Every effort counts — you’re doing great.",
-      "Let your spirit stay bright as the sun."
-    ]
-  },
-  evening: {
-    title: ["Good Evening 🌇", "Evening Reflections 🌠", "Unwind and Recharge"],
-    message: [
-      "Reflect on your day with compassion.",
-      "Rest is a powerful form of resilience.",
-      "You’ve earned this moment of peace.",
-      "Let gratitude fill your evening."
-    ]
-  },
-  night: {
-    title: ["Hello Night Owl 🌙", "Peaceful Night ✨", "Rest Well"],
-    message: [
-      "Take a moment for self-care. You’ve made it through today.",
-      "You are not alone.",
-      "Let tomorrow wait — tonight is for you.",
-      "Dream big, sleep deeply, and know you are enough."
-    ]
-  }
-};
-
+document.addEventListener("DOMContentLoaded", () => {
+  const greetings = {
+    morning: {
+      title: ["Good Morning 🌞", "Rise and Shine! 🌅", "Morning, Sunshine!"],
+      message: [
+        "Start your day with purpose and kindness.",
+        "You are resilient and capable.",
+        "May today bring you joy and clarity."
+      ]
+    },
+    afternoon: {
+      title: ["Good Afternoon 🌤️", "Hello, Beautiful Afternoon!", "Keep Going!"],
+      message: [
+        "Pause and breathe. Your presence is enough.",
+        "Keep moving forward with grace.",
+        "Every effort counts — you’re doing great."
+      ]
+    },
+    evening: {
+      title: ["Good Evening 🌇", "Evening Reflections 🌠", "Unwind and Recharge"],
+      message: [
+        "Reflect on your day with compassion.",
+        "Rest is a powerful form of resilience.",
+        "You’ve earned this moment of peace."
+      ]
+    },
+    night: {
+      title: ["Hello Night Owl 🌙", "Peaceful Night ✨", "Rest Well"],
+      message: [
+        "Take a moment for self-care. You’ve made it through today.",
+        "You are not alone.",
+        "Let tomorrow wait — tonight is for you."
+      ]
+    }
+  };
 const compliments = [
   "You are awesome! 🚀",
   "Keep shining!",
@@ -67,8 +44,9 @@ const compliments = [
   "You radiate positivity!",
   "Your courage inspires me.",
   "You are a force for good."
-];
-
+    ]
+  }
+};
 const holidays = {
   "01-01": "Happy New Year! 🎉 Wishing you a year of joy and growth.",
   "12-25": "Merry Christmas! 🎄 May your heart be light and your days bright.",
