@@ -1,5 +1,22 @@
 // --- Dynamic Greetings, Personalization, PWA, and Rolling Backgrounds ---
+document.addEventListener('DOMContentLoaded', function () {
+  const themeToggle = document.getElementById('themeToggle');
+  function setTheme(mode) {
+    document.body.classList.remove('light-mode', 'dark-mode');
+    document.body.classList.add(mode);
+    localStorage.setItem('theme', mode);
+    themeToggle.innerText = mode === 'dark-mode' ? '🌙' : '☀️';
+    themeToggle.setAttribute('aria-pressed', mode === 'dark-mode' ? 'true' : 'false');
+  }
+  // Initialize theme
+  const savedTheme = localStorage.getItem('theme') || 'dark-mode';
+  setTheme(savedTheme);
 
+  themeToggle.addEventListener('click', function () {
+    const isDark = document.body.classList.contains('dark-mode');
+    setTheme(isDark ? 'light-mode' : 'dark-mode');
+  });
+});
 const greetings = {
   morning: {
     title: ["Good Morning 🌞", "Rise and Shine! 🌅", "Morning, Sunshine!"],
