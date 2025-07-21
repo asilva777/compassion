@@ -1,180 +1,220 @@
-/* --- CSS Variables for Dynamic Backgrounds and Theming --- */
 :root {
-  --morning-bg-img: url('https://img.freepik.com/premium-photo/gradient-landscape-wallpaper_974629-18708.jpg');
-  --afternoon-bg-img: url('https://pics.craiyon.com/2023-10-08/001533fe4adc40d7b161b5ffe29bf707.webp');
-  --evening-bg-img: url('https://img.freepik.com/premium-vector/full-moon-with-clouds-stars-night-sky_16058-19.jpg');
-  --night-bg-img: url('https://tse1.mm.bing.net/th/id/OIP.VB28ktCNFOtPQHelGzrPSQHaHa?w=1800&h=1800&rs=1&pid=ImgDetMain&o=7&rm=3');
-}
-.morning-bg { background-image: var(--morning-bg-img); }
-.afternoon-bg { background-image: var(--afternoon-bg-img); }
-.evening-bg { background-image: var(--evening-bg-img); }
-.night-bg { background-image: var(--night-bg-img); }
-  
-  --greeting-font: 'Montserrat Clasic', 'Poppins', Arial, sans-serif;
-  --main-text: #000000";
-  --subtle-text: #666;
-  --accent: #000; /* Changed from #27ae60 (green) to black */
-  --card-bg: rgba(255,255,255,0.92);
-  --border-radius: 1.2em;
-  --shadow: 0 4px 32px rgba(0,0,0,0.16);
+  --gold: #FFD700;
+  --black: #111;
+  --light-bg: #fffbe6;
+  --dark-bg: #111;
+  --dark-text: #fffbe6;
+  --font-main: 'Montserrat', 'Oswald', 'Roboto Condensed', Arial, sans-serif;
+
+  /* Rolling backgrounds for different times */
+  --morning-bg-img: url('https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  --afternoon-bg-img: url('https://images.unsplash.com/photo-1515587749518-60a43ef2f892?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  --evening-bg-img: url('https://plus.unsplash.com/premium_photo-1673697239909-e11521d1ba94?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  --night-bg-img: url('https://images.unsplash.com/photo-1488866022504-f2584929ca5f?q=80&w=1724&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&q=80');
 }
 
 html, body {
   height: 100%;
   margin: 0;
-  padding: 0;
-  font-family: var(--greeting-font);
-  background: var(--morning-bg); /* fallback */
-  color: var(--main-text);
-  min-height: 100vh;
-  transition: background 0.8s cubic-bezier(.4,2.2,.2,1);
+  font-family: var(--font-main);
+  background: var(--dark-bg);
+  color: var(--black);
+  transition: background 0.5s, color 0.5s;
 }
 
-/* --- Centered Layout --- */
 body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   min-height: 100vh;
-  flex-direction: column;
-  transition: background-image 1s ease-in-out;
+  background-size: cover;
+  background-position: center;
 }
 
-/* --- Card Container for Greetings --- */
-#greetingCard, .greeting-card {
-  background: var(--card-bg);
-  box-shadow: var(--shadow);
-  border-radius: var(--border-radius);
-  padding: 2.4em 2.2em 1.7em 2.2em;
-  max-width: 420px;
+header {
+  padding: 2rem 0 1rem;
   text-align: center;
-  margin: 2em 0;
-  width: 90vw;
 }
 
-/* --- Greeting and Message Text --- */
-#greeting, .greeting {
-  font-size: 2.1em;
-  font-weight: 700;
-  margin: 0.3em 0 0.2em 0;
-  color: var(--accent); /* Now black */
+h1 {
+  font-family: 'Oswald', 'Montserrat', sans-serif;
+  font-size: 2.5rem;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
   letter-spacing: 1px;
 }
 
-#message, .message {
-  font-size: 1.15em;
-  font-weight: 400;
-  color: var(--subtle-text);
-  margin-bottom: 1em;
-  margin-top: 0.5em;
+nav {
+  text-align: center;
 }
 
-/* --- Fade-in Animation for Dynamic Text --- */
-.fade-in {
-  animation: fadeIn 0.85s cubic-bezier(.4,2.2,.2,1);
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-/* --- Username Form Styling --- */
-#usernameForm {
-  display: none;
+main {
+  display: flex;
   flex-direction: column;
   align-items: center;
-  background: var(--card-bg);
-  box-shadow: var(--shadow);
-  border-radius: var(--border-radius);
-  padding: 2em 2em 1.3em 2em;
-  max-width: 340px;
-  margin: 1em auto;
-  z-index: 2;
+  margin-bottom: 2rem;
 }
 
-#usernameForm label {
-  font-weight: 500;
-  margin-bottom: 0.7em;
-  font-size: 1.08em;
+#greetSection {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  margin: 2rem 0 1rem;
+  max-width: 450px;
+  box-shadow: 0 6px 32px rgba(0,0,0,0.07);
+  text-align: center;
 }
 
-#usernameForm input[type="text"] {
-  padding: 0.7em 1em;
-  border-radius: 0.9em;
-  border: 1px solid #bbb;
-  font-size: 1em;
-  margin-bottom: 1.1em;
-  width: 100%;
-  transition: border 0.2s;
+#greeting {
+  font-size: 2rem;
+  font-family: 'Montserrat', 'Oswald', sans-serif;
+  margin-bottom: 0.75rem;
+  color: var(--black);
 }
 
-#usernameForm input[type="text"]:focus {
-  border-color: var(--accent); /* Now black */
-  outline: none;
+#message {
+  font-size: 1.12rem;
+  font-family: 'Roboto Condensed', 'Montserrat', sans-serif;
+  margin-bottom: 1.2rem;
+  color: var(--black);
 }
 
-#usernameForm button {
-  background: var(--accent); /* Now black */
-  color: #fff; /* Button text white */
+.fade-in {
+  animation: fadeIn 0.8s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px);}
+  to { opacity: 1; transform: none;}
+}
+
+form#usernameForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255,255,255,0.95);
+  border-radius: 0.8rem;
+  padding: 1.25rem 1rem;
+  margin-top: 1rem;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+}
+
+form#usernameForm label {
+  font-family: 'Oswald', 'Montserrat', sans-serif;
+  font-size: 1.1rem;
+  margin-bottom: 0.7rem;
+  color: var(--black);
+}
+
+form#usernameForm input {
+  font-family: var(--font-main);
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.6rem;
+  border: 1px solid #ddd;
+  margin-bottom: 1rem;
+  width: 220px;
+}
+
+.gold-btn {
+  background: var(--gold);
+  color: var(--black);
   border: none;
-  border-radius: 0.9em;
-  padding: 0.7em 2em;
-  font-size: 1.06em;
-  font-weight: 600;
-  letter-spacing: 1px;
+  border-radius: 0.8rem;
+  padding: 0.7rem 1.7rem;
+  font-family: var(--font-main);
+  font-size: 1.1rem;
+  font-weight: bold;
   cursor: pointer;
-  transition: background 0.3s;
-}
-#usernameForm button:hover, #usernameForm button:focus {
-  background: #222;
+  margin-top: 0.5rem;
+  box-shadow: 0 2px 12px rgba(255, 215, 0, 0.18);
+  transition: background 0.2s, color 0.2s;
 }
 
-/* --- Another Message Button --- */
-#anotherMessage, .another-message-btn {
-  margin: 1em auto 0 auto;
-  padding: 0.65em 2em;
+.gold-btn:hover, .gold-btn:focus {
+  background: #ffe066;
+  color: var(--black);
+}
+
+#themeToggle {
+  background: var(--gold);
+  color: var(--black);
   border: none;
-  border-radius: 1em;
-  background: var(--accent); /* Now black */
-  color: #fff; /* Button text white */
-  font-weight: 600;
-  font-size: 1.07em;
-  letter-spacing: 0.7px;
+  border-radius: 2rem;
+  padding: 0.4rem 1.1rem;
+  font-size: 1.2rem;
+  font-family: var(--font-main);
   cursor: pointer;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
-  transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
-  outline: none;
-}
-#anotherMessage:hover, #anotherMessage:focus,
-.another-message-btn:hover, .another-message-btn:focus {
-  background: #222;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.18);
-  transform: scale(1.04);
+  box-shadow: 0 2px 12px rgba(255, 215, 0, 0.10);
+  margin-top: 0.5rem;
 }
 
-/* --- Responsive Design --- */
-@media (max-width: 520px) {
-  #greetingCard, .greeting-card,
-  #usernameForm {
-    padding: 1.2em 0.6em 1.1em 0.6em;
+footer {
+  background: rgba(255,255,255,0.92);
+  color: var(--black);
+  padding: 1rem 0;
+  text-align: center;
+  font-size: 1rem;
+  font-family: 'Roboto Condensed', 'Montserrat', sans-serif;
+  border-top: 1px solid #eee;
+}
+
+#toast {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--gold);
+  color: var(--black);
+  padding: 0.7rem 2rem;
+  border-radius: 1.1rem;
+  font-size: 1rem;
+  font-family: var(--font-main);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 999;
+  transition: opacity 0.5s;
+}
+
+#toast.show {
+  opacity: 1;
+}
+
+@media (max-width: 700px) {
+  #greetSection, form#usernameForm {
     max-width: 96vw;
+    padding: 1.2rem;
   }
-  #greeting, .greeting {
-    font-size: 1.3em;
-  }
-  #message, .message {
-    font-size: 1em;
-  }
+  h1 { font-size: 2rem; }
 }
-
-/* --- Accessibility: Focus Ring for All Buttons --- */
-button:focus-visible {
-  outline: 2px solid #000;
-  outline-offset: 3px;
+body.light-mode {
+  background: var(--light-bg);
+  color: var(--black);
+}
+body.light-mode #greetSection,
+body.light-mode form#usernameForm {
+  background: rgba(255,255,255,0.98);
+}
+body.light-mode footer {
+  background: rgba(255,255,255,0.95);
+  color: var(--black);
+}
+body.light-mode #toast {
+  background: var(--gold);
+  color: var(--black);
+}
+body.dark-mode {
+  background: var(--dark-bg);
+  color: var(--dark-text);
+}
+body.dark-mode #greetSection,
+body.dark-mode form#usernameForm {
+  background: rgba(17, 17, 17, 0.98);
+  color: var(--dark-text);
+}
+body.dark-mode footer {
+  background: rgba(17,17,17,0.92);
+  color: var(--dark-text);
+}
+body.dark-mode #toast {
+  background: var(--dark-bg);
+  color: var(--gold);
 }
