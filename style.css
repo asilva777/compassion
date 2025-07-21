@@ -10,8 +10,8 @@
 .evening-bg { background-image: var(--evening-bg-img); }
 .night-bg { background-image: var(--night-bg-img); }
   
-  --greeting-font: 'Segoe UI', 'Poppins', Arial, sans-serif;
-  --main-text: #222;
+  --greeting-font: 'Montserrat Clasic', 'Poppins', Arial, sans-serif;
+  --main-text: #000000";
   --subtle-text: #666;
   --accent: #000; /* Changed from #27ae60 (green) to black */
   --card-bg: rgba(255,255,255,0.92);
