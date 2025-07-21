@@ -17,8 +17,8 @@ html, body {
   height: 100%;
   margin: 0;
   font-family: var(--font-main);
-  background: var(--dark-bg);
-  color: var(--black);
+  background: var(--light-bg);
+  color: var(--white);
   transition: background 0.5s, color 0.5s;
 }
 
