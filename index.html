@@ -1,140 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compassion</title>
-    <meta name="Description" content="A web app that sends a personalized message of compassion to someone who needs it.">
-    <meta name="theme-color" content="#ffffff">
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="images/compassion192.png">
-    <link rel="icon" href="images/compassion192.png">
-    <link rel="stylesheet" href="style.css">
-    <style>
-        body {
-            font-family: sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-            line-height: 1.6;
-        }
-
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 1rem 0;
-            text-align: center;
-        }
-
-        main {
-            padding: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        section {
-            margin-bottom: 20px;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        input[type="text"],
-        textarea {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        button {
-            background-color: #5cb85c;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-
-        button:hover {
-            background-color: #4cae4c;
-        }
-
-        #messagePreview {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #f9f9f9;
-            border: 1px solid #eee;
-            border-radius: 4px;
-        }
-
-        #status {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 4px;
-            text-align: center;
-        }
-
-        #status.success {
-            background-color: #dff0d8;
-            color: #3c763d;
-            border: 1px solid #d6e9c6;
-        }
-
-        #status.error {
-            background-color: #f2dede;
-            color: #a94442;
-            border: 1px solid #ebccd1;
-        }
-
-        footer {
-            text-align: center;
-            padding: 1rem 0;
-            background-color: #333;
-            color: #fff;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-
-        /* Accessibility improvements */
-        input:focus,
-        textarea:focus,
-        button:focus {
-            outline: 2px solid #5cb85c;
-            outline-offset: 2px;
-        }
-
-        /* Ensure sufficient contrast */
-        body {
-            color: #333;
-            /* Adjust as needed */
-            background-color: #f4f4f4;
-            /* Adjust as needed */
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <meta name="description" content="Personalized daily greetings and compliments to inspire compassion and positivity.">
+  <meta name="theme-color" content="#FFD700">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Oswald:400,700|Roboto+Condensed:400,700&display=swap">
+  <link rel="stylesheet" href="style.css">
 </head>
-
-<body lang="en">
-    <header>
-        <h1>Compassion</h1>
-        <p>Send a message of compassion to someone who needs it.</p>
-    </header>
-
-    <main>
-        <section>
+<body>
+  <header>
+    <h1></h1>
+    <nav>
+      <button id="themeToggle" aria-pressed="false" aria-label="Toggle dark/light mode">🌙</button>
+    </nav>
+  </header>
+  <main>
+    <section id="greetSection">
+      <div id="greeting" class="fade-in"></div>
+      <div id="message" class="fade-in"></div>
+      <button id="anotherMessage" class="gold-btn" aria-label="Show another greeting">Another Greeting</button>
+    </section>
+    <form id="usernameForm" style="display:none;" autocomplete="off">
+      <label for="usernameInput">What's your name?</label>
+      <input type="text" id="usernameInput" name="usernameInput" required maxlength="32" autocomplete="off">
+      <button type="submit" class="gold-btn">Save</button>
+    </form>
+  </main>
+    <span></span>
+  <div id="toast" role="status" aria-live="polite"></div>
+    <section>
             <h2>Create Your Message</h2>
             <form id="compassionForm">
                 <div class="form-group">
@@ -167,8 +65,8 @@
     </main>
 
     <footer>
-        <p>&copy; 2025 Compassion</p>
     </footer>
+    <script> link="script.js" </script>
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/service-worker.js')
@@ -214,5 +112,4 @@
         }
     </script>
 </body>
-
 </html> 
